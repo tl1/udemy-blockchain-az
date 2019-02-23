@@ -1,0 +1,15 @@
+{
+  "name": "blockchain",
+  "version": "0.1.0",
+  "description": "Udemy Blockchain A-Z JS transcript.",
+  "main": "blockchain.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Tilman Linden",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^24.1.0",
+    "jest-extended": "^0.11.1"
+  }
+}

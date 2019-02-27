@@ -12,6 +12,10 @@ app.post('/mine', (req, res) => {
     res.status(201).json(block);
 });
 
+app.get('/', (req, res) => {
+    res.status(200).json(chain);
+});
+
 app.listen(port, () => {
     console.log(`Application started on port ${port}`);
 });

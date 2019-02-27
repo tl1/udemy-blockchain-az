@@ -69,6 +69,16 @@ test('recognizes a valid chain', () => {
     expect(blockchain.isValid(chain)).toBe(true);
 });
 
+test('recognizes a long valid chain', () => {
+    const chain = [...Array(10).keys()].reduce((chain, value) => {
+        const lastBlock = blockchain.lastBlock(chain);
+        const proof = blockchain.proofOfWork(lastBlock.proof);
+        const previousHash = blockchain.blockHash(lastBlock);
+        return blockchain.addBlock(chain, proof, previousHash);
+    }, blockchain.init());
+    expect(blockchain.isValid(chain)).toBe(true);
+});
+
 test('recognizes an invalid chain due to wrong previous hash', () => {
     let chain = blockchain.init();
     const previousBlock = blockchain.lastBlock(chain);

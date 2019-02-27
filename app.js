@@ -16,6 +16,13 @@ app.get('/', (req, res) => {
     res.status(200).json(chain);
 });
 
+app.get('/status', (req, res) => {
+    res.status(200).json({
+        valid: blockchain.isValid(chain),
+        length: chain.length
+    });
+});
+
 app.listen(port, () => {
     console.log(`Application started on port ${port}`);
 });

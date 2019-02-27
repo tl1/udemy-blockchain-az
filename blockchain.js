@@ -90,7 +90,19 @@ const proofHash = (previousProof, proof) => {
  * @returns Whether chain is valid.
  */
 const isValid = (chain) => {
-  return true;
+  let valid = true;
+  let i1 = 0;
+  let i2 = 1;
+  while (valid && i2 < chain.length) {
+    let block1 = chain[i1];
+    let block2 = chain[i2];
+    if (blockHash(block1) != block2.previousHash) {
+      valid = false;
+    }
+    i1++;
+    i2++;
+  }
+  return valid;
 }
 
 module.exports = {

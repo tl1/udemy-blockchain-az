@@ -64,8 +64,16 @@ test('finds a proof of work', () => {
     expect(proof).toBeNumber();
 });
 
-test('recognizes an valid chain', () => {
+test('recognizes a valid chain', () => {
     const chain = blockchain.init();
     expect(blockchain.isValid(chain)).toBe(true);
 });
 
+test('recognizes an invalid chain due to wrong previous hash', () => {
+    let chain = blockchain.init();
+    const previousBlock = blockchain.lastBlock(chain);
+    const proof = blockchain.proofOfWork(previousBlock.proof);
+    const previousHash = "INVALID";
+    chain = blockchain.addBlock(chain, proof, previousHash);
+    expect(blockchain.isValid(chain)).toBe(false);
+});

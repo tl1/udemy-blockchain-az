@@ -1,6 +1,6 @@
 # Udemy Blockchain A-Z - nodejs Transcript
 
-This repos contains my transcript of the practical components of Udemy's
+This repo contains a JS transcript of the practical part of Udemy's
 "Blockchain A-Z" course. The original code is in Python using Flask.
 
 Course link: https://www.udemy.com/build-your-blockchain-az

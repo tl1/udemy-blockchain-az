@@ -33,9 +33,25 @@ const addBlock = (chain, proof, previousHash) => {
  * @param chain Blockchain.
  * @returns Last block of chain.
  */
-const getLastBlock = (chain) => {
+const lastBlock = (chain) => {
   return chain[chain.length - 1];
 }
+
+/**
+ * Computes block's sha256 hash.
+ * 
+ * @param block Block to hash.
+ * @return Block's sha256 hash. 
+ */
+const blockHash = (block) => {
+  const blockData = Object.entries(block).sort((a, b) => a[0] - b[0]);
+  const hash = blockData.reduce((acc, value) => {
+    acc.update(value[0].toString());
+    acc.update(value[1].toString());
+    return acc;
+  }, crypto.createHash('sha256'));
+  return hash.digest('hex');
+};
 
 /**
  * Calculates proof of work.
@@ -59,6 +75,7 @@ const proofOfWork = (previousProof) => {
 module.exports = {
   init,
   addBlock,
-  getLastBlock,
+  lastBlock,
+  blockHash,
   proofOfWork
 };

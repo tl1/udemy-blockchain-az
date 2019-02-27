@@ -35,7 +35,28 @@ test('inits chain with genesis block', () => {
 
 test('gets the last block from a chain', () => {
     const chain = blockchain.init();
-    expect(blockchain.getLastBlock(chain).index).toBe(1);
+    expect(blockchain.lastBlock(chain).index).toBe(1);
+});
+
+test('computes deterministic block hash', () => {
+    const block = {
+        index: 10,
+        timestamp: new Date(),
+        proof: 10293,
+        previousHash: "12345"
+    };
+    const hash = blockchain.blockHash(block);
+    expect(hash).toMatch(/^[0-9a-z]{64}$/i);
+    for (i = 0; i < 32; i++) {
+        expect(blockchain.blockHash(block)).toEqual(hash);
+    }
+    const block2 = {
+        index: 11,
+        timestamp: new Date(),
+        proof: 10293,
+        previousHash: "12345"
+    };
+    expect(blockchain.blockHash(block2)).not.toEqual(hash); 
 });
 
 test('finds a proof of work', () => {

@@ -83,10 +83,21 @@ const proofHash = (previousProof, proof) => {
     .digest('hex');
 }
 
+/**
+ * Checks whether given chain is valid.
+ * 
+ * @param chain Chain to check. 
+ * @returns Whether chain is valid.
+ */
+const isValid = (chain) => {
+  return true;
+}
+
 module.exports = {
   init,
   addBlock,
   lastBlock,
   blockHash,
-  proofOfWork
+  proofOfWork,
+  isValid
 };

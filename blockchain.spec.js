@@ -63,3 +63,9 @@ test('finds a proof of work', () => {
     const proof = blockchain.proofOfWork(1);
     expect(proof).toBeNumber();
 });
+
+test('recognizes an valid chain', () => {
+    const chain = blockchain.init();
+    expect(blockchain.isValid(chain)).toBe(true);
+});
+

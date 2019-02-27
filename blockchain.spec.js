@@ -96,3 +96,11 @@ test('recognizes an invalid chain due to wrong proof', () => {
     chain = blockchain.addBlock(chain, proof, previousHash);
     expect(blockchain.isValid(chain)).toBe(false);
 });
+
+test('mines a new block', () => {
+    const chain = blockchain.init();
+    const chain2 = blockchain.mine(chain);
+    expect(chain2).toHaveLength(chain.length + 1);
+    expect(blockchain.isValid(chain2)).toBe(true);
+    expect(chain2[0]).toBe(chain[0]);
+});

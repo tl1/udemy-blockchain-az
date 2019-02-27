@@ -102,11 +102,25 @@ const isValid = (chain) => {
   return valid;
 }
 
+/**
+ * Mines a new block for the given chain.
+ * 
+ * @param chain Chain.
+ * @return New chain with additional block. 
+ */
+const mine = (chain) => {
+  const previousBlock = lastBlock(chain);
+  const proof = proofOfWork(previousBlock.proof);
+  const previousHash = blockHash(previousBlock);
+  return addBlock(chain, proof, previousHash);
+}
+
 module.exports = {
   init,
   addBlock,
   lastBlock,
   blockHash,
   proofOfWork,
-  isValid
+  isValid,
+  mine
 };

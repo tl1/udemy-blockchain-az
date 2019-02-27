@@ -87,3 +87,12 @@ test('recognizes an invalid chain due to wrong previous hash', () => {
     chain = blockchain.addBlock(chain, proof, previousHash);
     expect(blockchain.isValid(chain)).toBe(false);
 });
+
+test('recognizes an invalid chain due to wrong proof', () => {
+    let chain = blockchain.init();
+    const previousBlock = blockchain.lastBlock(chain);
+    const proof = 91823847;
+    const previousHash = blockchain.blockHash(previousBlock);
+    chain = blockchain.addBlock(chain, proof, previousHash);
+    expect(blockchain.isValid(chain)).toBe(false);
+});

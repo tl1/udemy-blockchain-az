@@ -91,16 +91,13 @@ const proofHash = (previousProof, proof) => {
  */
 const isValid = (chain) => {
   let valid = true;
-  let i1 = 0;
-  let i2 = 1;
-  while (valid && i2 < chain.length) {
-    let block1 = chain[i1];
-    let block2 = chain[i2];
-    if (blockHash(block1) != block2.previousHash) {
-      valid = false;
-    }
-    i1++;
-    i2++;
+  let i = 1;
+  for (i = 1; valid && i < chain.length; i++) {
+    let block1 = chain[i -1];
+    let block2 = chain[i];
+    let previousHashValid = blockHash(block1) == block2.previousHash;
+    let proofValid = proofHash(block1.proof, block2.proof).startsWith('0000');
+    valid = previousHashValid && proofValid;  
   }
   return valid;
 }

@@ -64,12 +64,23 @@ const proofOfWork = (previousProof) => {
   let hash;
   do {
     proof += 1;
-    hash = crypto
-      .createHash('sha256')
-      .update((proof * proof - previousProof * previousProof).toString())
-      .digest('hex');
+    hash = proofHash(previousProof, proof);
   } while (!hash.startsWith('0000'));
   return proof;
+}
+
+/**
+ * Proof-of-work hash function.
+ * 
+ * @param previousProof Proof of previous block.
+ * @param proof Proof of current block.
+ * @returns Hash value for proof-of-work. 
+ */
+const proofHash = (previousProof, proof) => {
+  return crypto
+    .createHash('sha256')
+    .update((proof * proof - previousProof * previousProof).toString())
+    .digest('hex');
 }
 
 module.exports = {

@@ -4,7 +4,7 @@
   "description": "Udemy Blockchain A-Z JS transcript.",
   "main": "blockchain.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node api.js",
     "test": "jest"
   },
   "jest": {

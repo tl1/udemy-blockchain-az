@@ -4,7 +4,7 @@
   "description": "Udemy Blockchain A-Z JS transcript.",
   "main": "blockchain.js",
   "scripts": {
-    "start": "node api.js",
+    "start": "node -r dotenv/config api.js",
     "test": "jest"
   },
   "jest": {
@@ -19,6 +19,7 @@
     "jest-extended": "^0.11.1"
   },
   "dependencies": {
+    "dotenv": "^6.2.0",
     "express": "^4.16.4"
   }
 }

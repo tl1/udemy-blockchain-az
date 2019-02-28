@@ -1,7 +1,6 @@
 const express = require('express');
 const blockchain = require('./blockchain');
 const app = express();
-const port = 3000;
 
 var chain = blockchain.init();
 
@@ -22,6 +21,8 @@ app.get('/status', (req, res) => {
         length: chain.length
     });
 });
+
+const port = process.env.API_PORT;
 
 app.listen(port, () => {
     console.log(`Application started on port ${port}`);

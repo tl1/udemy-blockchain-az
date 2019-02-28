@@ -46,9 +46,10 @@ const lastBlock = (chain) => {
 const blockHash = (block) => {
   const blockData = Object.entries(block).sort((a, b) => a[0] - b[0]);
   const hash = blockData.reduce((acc, value) => {
-    acc.update(value[0].toString());
-    acc.update(value[1].toString());
-    return acc;
+    return acc
+      .update(value[0].toString())
+      .update('---')
+      .update(value[1].toString());
   }, crypto.createHash('sha256'));
   return hash.digest('hex');
 };

@@ -38,21 +38,36 @@ const lastBlock = (chain) => {
 }
 
 /**
- * Computes block's sha256 hash.
+ * Computes object's sha256 hash.
  * 
- * @param block Block to hash.
- * @return Block's sha256 hash. 
+ * @param obj Object to hash.
+ * @return Object's sha256 hash. 
  */
-const blockHash = (block) => {
-  const blockData = Object.entries(block).sort((a, b) => a[0] - b[0]);
-  const hash = blockData.reduce((acc, value) => {
-    return acc
-      .update(value[0].toString())
-      .update('---')
-      .update(value[1].toString());
-  }, crypto.createHash('sha256'));
-  return hash.digest('hex');
+const objectHash = (obj) => {
+  return objectHashRec(obj, crypto.createHash('sha256')).digest('hex');
 };
+
+/**
+ * Recursively traverse given object and updates given hash.
+ * 
+ * @param obj Object to hash.
+ * @param hash Hash to update. 
+ */
+const objectHashRec = (obj, hash) => {  
+  if (obj === null) {
+    hash.update("null");
+  } else if (Array.isArray(obj)) {
+    for (let i = 0; i < obj.length; i++) {
+      objectHashRec(obj[i], hash);
+    }
+  } else if (typeof obj === 'object') {
+    objectHashRec(Object.entries(obj).sort((a, b) => a[0] - b[0]), hash);
+  } else {
+    hash.update(obj.toString());
+  }
+  hash.update(".");  
+  return hash;
+}
 
 /**
  * Calculates proof of work.
@@ -96,7 +111,7 @@ const isValid = (chain) => {
   for (i = 1; valid && i < chain.length; i++) {
     let block1 = chain[i -1];
     let block2 = chain[i];
-    let previousHashValid = blockHash(block1) == block2.previousHash;
+    let previousHashValid = objectHash(block1) == block2.previousHash;
     let proofValid = proofHash(block1.proof, block2.proof).startsWith('0000');
     valid = previousHashValid && proofValid;  
   }
@@ -112,7 +127,7 @@ const isValid = (chain) => {
 const mine = (chain) => {
   const previousBlock = lastBlock(chain);
   const proof = proofOfWork(previousBlock.proof);
-  const previousHash = blockHash(previousBlock);
+  const previousHash = objectHash(previousBlock);
   return addBlock(chain, proof, previousHash);
 }
 
@@ -120,7 +135,7 @@ module.exports = {
   init,
   addBlock,
   lastBlock,
-  blockHash,
+  objectHash: objectHash,
   proofOfWork,
   isValid,
   mine

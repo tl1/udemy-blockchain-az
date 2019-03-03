@@ -38,17 +38,17 @@ test('gets the last block from a chain', () => {
     expect(blockchain.lastBlock(chain).index).toBe(1);
 });
 
-test('computes deterministic block hash', () => {
+test('computes deterministic object hash', () => {
     const block = {
         index: 10,
         timestamp: new Date(),
         proof: 10293,
         previousHash: "12345"
     };
-    const hash = blockchain.blockHash(block);
+    const hash = blockchain.objectHash(block);
     expect(hash).toMatch(/^[0-9a-z]{64}$/i);
     for (i = 0; i < 32; i++) {
-        expect(blockchain.blockHash(block)).toEqual(hash);
+        expect(blockchain.objectHash(block)).toEqual(hash);
     }
     const block2 = {
         index: 11,
@@ -56,7 +56,7 @@ test('computes deterministic block hash', () => {
         proof: 10293,
         previousHash: "12345"
     };
-    expect(blockchain.blockHash(block2)).not.toEqual(hash); 
+    expect(blockchain.objectHash(block2)).not.toEqual(hash); 
 });
 
 test('finds a proof of work', () => {
@@ -73,7 +73,7 @@ test('recognizes a long valid chain', () => {
     const chain = [...Array(10).keys()].reduce((chain, value) => {
         const lastBlock = blockchain.lastBlock(chain);
         const proof = blockchain.proofOfWork(lastBlock.proof);
-        const previousHash = blockchain.blockHash(lastBlock);
+        const previousHash = blockchain.objectHash(lastBlock);
         return blockchain.addBlock(chain, proof, previousHash);
     }, blockchain.init());
     expect(blockchain.isValid(chain)).toBe(true);
@@ -92,7 +92,7 @@ test('recognizes an invalid chain due to wrong proof', () => {
     let chain = blockchain.init();
     const previousBlock = blockchain.lastBlock(chain);
     const proof = 91823847;
-    const previousHash = blockchain.blockHash(previousBlock);
+    const previousHash = blockchain.objectHash(previousBlock);
     chain = blockchain.addBlock(chain, proof, previousHash);
     expect(blockchain.isValid(chain)).toBe(false);
 });

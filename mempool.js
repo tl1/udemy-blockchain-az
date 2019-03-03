@@ -1,3 +1,5 @@
+const uuid = require('uuid/v1');
+
 /**
  * Adds a transacation to given pool.
  * 
@@ -8,6 +10,7 @@
  */
 const addTx = (pool, sender, receiver, amount) => {
     let tx = {
+        id: uuid(),
         sender,
         receiver,
         amount

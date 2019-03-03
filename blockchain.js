@@ -15,14 +15,16 @@ const init = () => {
  * @param chain Blockchain.
  * @param proof Proof for new block.
  * @param previousHash Hash of the previous block.
+ * @param payload Block's payload.
  * @returns New chain with new block added.
  */
-const addBlock = (chain, proof, previousHash) => {
+const addBlock = (chain, proof, previousHash, payload = '') => {
   let block = {
     index: chain.length + 1,
     timestamp: new Date(),
     proof,
-    previousHash
+    previousHash,
+    payload
   };
   return [...chain, block];
 }
@@ -122,13 +124,14 @@ const isValid = (chain) => {
  * Mines a new block for the given chain.
  * 
  * @param chain Chain.
+ * @param payload New block's payload.
  * @return New chain with additional block. 
  */
-const mine = (chain) => {
+const mine = (chain, payload = '') => {
   const previousBlock = lastBlock(chain);
   const proof = proofOfWork(previousBlock.proof);
   const previousHash = objectHash(previousBlock);
-  return addBlock(chain, proof, previousHash);
+  return addBlock(chain, proof, previousHash, payload);
 }
 
 module.exports = {

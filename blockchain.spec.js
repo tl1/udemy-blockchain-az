@@ -20,12 +20,13 @@ expect.extend({
 });
 
 test('adds a block to an empty chain', () => {
-    const chain = blockchain.addBlock([], 1, '0');
+    const chain = blockchain.addBlock([], 1, '0', [ 'payload' ]);
     expect(chain).toHaveLength(1);
     expect(chain[0].index).toBe(1);
     expect(chain[0].timestamp).toBeWithinMillisBefore(new Date(), 500);
     expect(chain[0].proof).toBe(1);
     expect(chain[0].previousHash).toBe('0');    
+    expect(chain[0].payload).toEqual([ 'payload' ]);
 });
 
 test('inits chain with genesis block', () => {
@@ -99,8 +100,9 @@ test('recognizes an invalid chain due to wrong proof', () => {
 
 test('mines a new block', () => {
     const chain = blockchain.init();
-    const chain2 = blockchain.mine(chain);
+    const chain2 = blockchain.mine(chain, [ 'pay' ]);
     expect(chain2).toHaveLength(chain.length + 1);
     expect(blockchain.isValid(chain2)).toBe(true);
     expect(chain2[0]).toBe(chain[0]);
+    expect(chain2[1].payload).toEqual([ 'pay' ]);
 });

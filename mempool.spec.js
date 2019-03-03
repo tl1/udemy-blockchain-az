@@ -50,4 +50,3 @@ test('merges 2 pools', () => {
         amount: 20
     });
 });
-

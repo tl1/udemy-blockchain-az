@@ -5,8 +5,8 @@ const crypto = require('crypto');
  * 
  * @returns Initialized blockchain.
  */
-const init = () => {
-  return addBlock([], 1, '0');
+const init = (genesisPayload = '') => {
+  return addBlock([], 1, '0', genesisPayload);
 }
 
 /**

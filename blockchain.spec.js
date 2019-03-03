@@ -7,12 +7,12 @@ expect.extend({
             received.getTime() > time.getTime() - millis;
         if (matches) {
             return {
-                message: () => `expected ${received} not to be within ${millis} ms before ${time}`,
+                message: () => `expected ${this.utils.printReceived(received)} not to be within ${millis} ms before ${time}`,
                 pass: true
             };
         } else {
             return {
-                message: () => `expected ${received} to be within ${millis} ms before ${time}`,
+                message: () => `expected ${this.utils.printReceived(received)} to be within ${millis} ms before ${time}`,
                 pass: false
             }
         }
